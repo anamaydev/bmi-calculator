@@ -1,1 +1,76 @@
+@font-face {
+  font-family: "Inter", sans-serif;
+  src: url("./assets/fonts/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
+
+@theme{
+  /* custom colors */
+  --color-white: hsla(0, 0%, 100%, 1);
+  --color-black: hsla(0, 0%, 0%, 1);
+  --color-grey-500: hsla(215, 17%, 45%, 1);
+  --color-grey-300: hsla(215, 43%, 77%, 1);
+  --color-blue-900: hsla(215, 31%, 21%, 1);
+  --color-blue-500: hsla(227, 92%, 58%, 1);
+  --color-blue-300: hsla(209, 69%, 82%, 1);
+  --color-blue-100: hsla(228, 94%, 94%, 1);
+  
+  /* customizing default tailwind spacing */
+  --spacing: 0.5rem;
+  
+  /* custom font */
+  --font-inter: "Inter", sans-serif;
+  
+  /* custom font size variables */
+  --text-xxxl: 4rem;      /* 64px */
+  --text-xxl: 3rem;       /* 48px */
+  --text-xl: 2rem;        /* 32px */
+  --text-lg: 1.5rem;      /* 24px */
+  --text-md: 1.25rem;     /* 20px */
+  --text-base: 1rem;      /* 16px */
+  --text-sm: 0.875rem;    /* 14px */
+  
+  /* customizing default tailwind leading */
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+}
+
+@utility text-preset-1-semi-bold{
+  @apply text-xxxl leading-tight -tracking-[3.2px] font-semibold;
+}
+
+@utility text-preset-2-semi-bold{
+  @apply text-xxl leading-tight -tracking-[2.4px] font-semibold;
+}
+
+@utility text-preset-3-semi-bold{
+  @apply text-xl leading-tight -tracking-[1.6px] font-semibold;
+}
+
+@utility text-preset-4-semi-bold{
+  @apply text-lg leading-snug -tracking-[1.2px] font-semibold;
+}
+
+@utility text-preset-5-semi-bold{
+  @apply text-md leading-snug -tracking-[1px] font-semibold;
+}
+
+@utility text-preset-6-semi-bold{
+  @apply text-base leading-normal font-semibold;
+}
+
+@utility text-preset-6-regular{
+  @apply text-base leading-normal font-normal;
+}
+
+@utility text-preset-7-bold{
+  @apply text-sm leading-normal font-bold;
+}
+
+@utility text-preset-7-regular{
+  @apply text-sm leading-normal font-normal;
+}
