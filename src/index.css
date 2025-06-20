@@ -37,8 +37,26 @@
   /* customizing default tailwind leading */
   --leading-tight: 1.1;
   --leading-snug: 1.2;
+  
+  /* custom variables */
+  --custom-bg-height: 46.0625rem;
 }
 
+@layer base {
+  /* remove arrow from number input: Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* remove arrow from number input: Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* text preset utility classes */
 @utility text-preset-1-semi-bold{
   @apply text-xxxl leading-tight -tracking-[3.2px] font-semibold;
 }
@@ -73,4 +91,22 @@
 
 @utility text-preset-7-regular{
   @apply text-sm leading-normal font-normal;
+}
+
+/* gradient background for hero section */
+.gradient{
+  background: linear-gradient(90deg, rgba(214, 252, 254, 0.00) 0%, #D6E6FE 100%);
+}
+
+/* custom border radius */
+/* todo: raise issue in tailwind */
+.welcome-border{
+  border-radius: 1rem;
+}
+
+@media (min-width: 640px){
+  .welcome-border{
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+  }
 }

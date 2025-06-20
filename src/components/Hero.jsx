@@ -1,0 +1,116 @@
+import Calculator from "./Calculator"
+import {createContext, useEffect, useState} from "react";
+
+export const CalculatorDataContext = createContext();
+
+const Hero = () => {
+
+  const [system, setSystem] = useState(null);
+  const [height, setHeight] = useState({});
+  const [weight, setWeight] = useState({});
+  const [bmi, setBmi] = useState(null);
+
+  useEffect(() => {
+    if(!system) return;
+
+    let calculatedBmi = null;
+    if(system === 'metric') {
+      const heightCm = Number(height['height-cm']);
+      const weightKg = Number(weight['weight-kg']);
+
+      if (!heightCm || !weightKg) return;
+
+      calculatedBmi = (weightKg / Math.pow((heightCm / 100), 2)).toFixed(1);
+      setBmi(calculatedBmi);
+    }
+
+    if(system === 'imperial') {
+      const heightIn = Number(height['height-ft']) * 12 + Number(height['height-in']);
+      const weightLbs = Number(weight['weight-st']) * 14 + Number(weight['weight-lbs']);
+
+      if (!heightIn || !weightLbs) return;
+
+      calculatedBmi = ((weightLbs / Math.pow(heightIn, 2)) * 703).toFixed(1);
+      setBmi(calculatedBmi);
+    }
+  },[system, height, weight]);
+
+  return (
+    /* main container */
+    <div className="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:gap-4 items-center">
+      {/* about */}
+      <div className="flex flex-col gap-3 lg:gap-4 flex-1">
+        <h1 className="text-preset-2-semi-bold text-blue-900 text-center lg:text-start">Body Mass Index Calculator</h1>
+        <p className="text-preset-6-regular text-grey-500 text-center lg:text-start">Better understand your weight in relation to your height using our body mass index (BM) calculator. While BMI is not the sole determinant of a healthy weight, it offers a valuable starting point to evaluate your overall health and well-being.</p>
+      </div>
+
+      {/* calculator */}
+      <CalculatorDataContext.Provider value={{setSystem, height, setHeight, weight, setWeight}}>
+        <Calculator>
+          <h2 className="text-preset-4-semi-bold text-blue-900">Enter your details below</h2>
+          <div className="flex gap-3">
+            <Calculator.RadioInput label={'metric'}/>
+            <Calculator.RadioInput label={'imperial'}/>
+          </div>
+
+          {
+            system !== 'imperial' &&
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
+              <div className="flex flex-col gap-1 w-full">
+                <p className="text-preset-7-regular text-grey-500">Height</p>
+                <Calculator.NumericInput id={'height-cm'}/>
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <p className="text-preset-7-regular text-grey-500">Weight</p>
+                <Calculator.NumericInput id={'weight-kg'}/>
+              </div>
+            </div>
+          }
+
+          {
+            system === 'imperial' &&
+            <div className="flex flex-col gap-2 sm:gap-4 lg:gap-3">
+              <div className="flex flex-col gap-1 w-full">
+                <p className="text-preset-7-regular text-grey-500">Height</p>
+                <div className="flex gap-2 sm:gap-3">
+                  <Calculator.NumericInput id={'height-ft'}/>
+                  <Calculator.NumericInput id={'height-in'}/>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <p className="text-preset-7-regular text-grey-500">Weight</p>
+                <div className="flex gap-2 sm:gap-3">
+                  <Calculator.NumericInput id={'weight-st'}/>
+                  <Calculator.NumericInput id={'weight-lbs'}/>
+                </div>
+              </div>
+            </div>
+          }
+
+          <Calculator.Output>
+            {
+              !bmi &&
+              <>
+                <p className="text-preset-4-semi-bold text-white">Welcome!</p>
+                <p className="text-preset-7-regular text-white">Enter you height and weight and you'll see your BMI result here</p>
+              </>
+            }
+
+            {
+              bmi &&
+              <div  className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex flex-col gap-1 flex-1">
+                  <p className="text-preset-6-semi-bold text-white">Your BMI is...</p>
+                  <p className="text-preset-2-semi-bold lg:text-preset-1-semi-bold text-white">{bmi}</p>
+                </div>
+                <p className="text-preset-7-regular text-white flex-1">Your BMI suggests you’re a healthy weight. Your ideal weight is between 9st 6lbs - 12st 10lbs.</p>
+              </div>
+            }
+          </Calculator.Output>
+        </Calculator>
+      </CalculatorDataContext.Provider>
+    </div>
+  )
+}
+
+export default Hero
