@@ -1,5 +1,6 @@
-import Navbar from "./components/Navbar.jsx";
-import Hero from "./components/Hero.jsx";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Results from "./components/Results";
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
         <Navbar />
         <Hero />
       </div>
+        <Results/>
     </>
   )
 }

@@ -4,7 +4,7 @@ import {CalculatorDataContext} from "./Hero";
 const Calculator = ({children}) => {
 
   return (
-      <div className="p-3 sm:p-4 flex flex-col gap-3 sm:gap-4 bg-white rounded-[1rem] flex-1 self-stretch" >
+      <div className="p-3 sm:p-4 flex flex-col gap-3 sm:gap-4 bg-white rounded-[1rem] flex-1 self-stretch calculator-shadow" >
         {children}
       </div>
   )
