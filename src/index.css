@@ -108,9 +108,26 @@
   box-shadow: 1rem 2rem 3.5rem 0 hsla(211, 40%, 69%, 0.25);
 }
 
-@media (min-width: 640px){
+.gradient-tip::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  isolation: isolate;
+  opacity: 25%;
+  background: linear-gradient(90deg, hsla(183, 95%, 92%, 0) 0%, hsla(216, 95%, 92%, 1) 100%);
+}
+
+@media (min-width: 40rem){
   .welcome-border{
     border-top-right-radius: 100px;
     border-bottom-right-radius: 100px;
+  }
+}
+
+@media (min-width: 64rem){
+  .gradient-tip::after{
+    border-radius: 35px;
+    right: 38px;
   }
 }
