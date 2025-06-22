@@ -4,11 +4,31 @@ import {createContext, useEffect, useState} from "react";
 export const CalculatorDataContext = createContext();
 
 const Hero = () => {
-
   const [system, setSystem] = useState(null);
   const [height, setHeight] = useState({});
   const [weight, setWeight] = useState({});
   const [bmi, setBmi] = useState(null);
+  const [weightRangeMetric, setWeightRangeMetric] = useState({});
+  const [weightRangeImperial, setWeightRangeImperial] = useState({});
+
+  // set feedback message based on user's bmi
+  function setFeedback(bmi ,system, metricRange, imperialRange) {
+    let category = "";
+    if(bmi < 18.5) category = "underweight";
+    else if(bmi >= 18.5 && bmi <= 24.9) category = "a healthy weight";
+    else if(bmi >= 25 && bmi <= 29.9) category = "overweight";
+    else if(bmi >= 30 && bmi <= 34.9) category = "obese";
+    else if(bmi >= 35 && bmi <= 39.9) category = "very obese";
+    else category = "extremely obese";
+
+    if(system === "metric"){
+      if (!metricRange.minWeightKg || !metricRange.maxWeightKg) return null;
+      return <p className="text-preset-7-regular text-white flex-1">Your BMI suggests you’re <strong>{category}</strong>. Your ideal weight is between <strong>{metricRange.minWeightKg}kgs - {metricRange.maxWeightKg}kgs</strong>.</p>
+    }else {
+      if (!imperialRange.minWeight || !imperialRange.maxWeight) return null;
+      return <p className="text-preset-7-regular text-white flex-1">Your BMI suggests you’re <strong>{category}</strong>. Your ideal weight is between <strong>{imperialRange.minWeight.st}st {imperialRange.minWeight.lbs}lbs - {imperialRange.maxWeight.st}st {imperialRange.maxWeight.lbs}lbs</strong>.</p>
+    }
+  }
 
   useEffect(() => {
     if(!system) return;
@@ -20,8 +40,11 @@ const Hero = () => {
 
       if (!heightCm || !weightKg) return;
 
+      // calculate bmi
       calculatedBmi = (weightKg / Math.pow((heightCm / 100), 2)).toFixed(1);
       setBmi(calculatedBmi);
+
+      calcHealthyWeightRange(heightCm / 100, 'metric');
     }
 
     if(system === 'imperial') {
@@ -30,8 +53,32 @@ const Hero = () => {
 
       if (!heightIn || !weightLbs) return;
 
+      // calculate bmi
       calculatedBmi = ((weightLbs / Math.pow(heightIn, 2)) * 703).toFixed(1);
       setBmi(calculatedBmi);
+
+      calcHealthyWeightRange(heightIn * 0.0254, 'imperial');
+    }
+
+    // calculate healthy weight range
+    function calcHealthyWeightRange(heightM, system){
+      const min = 18.5 * Math.pow(heightM, 2);
+      const max = 24.9 * Math.pow(heightM, 2);
+
+      if(system === 'metric') {
+        setWeightRangeMetric({minWeightKg: min.toFixed(1), maxWeightKg: max.toFixed(1)})
+      }else{
+        setWeightRangeImperial({
+          minWeight: convertToStLbs(min * 2.20462),
+          maxWeight: convertToStLbs(max * 2.20462),
+        })
+      }
+    }
+
+    function convertToStLbs(weightLbs){
+      const stone = Math.floor(weightLbs / 14);
+      const remainingLbs = Math.round(weightLbs % 14)
+      return {st: stone, lbs:remainingLbs};
     }
   },[system, height, weight]);
 
@@ -103,7 +150,7 @@ const Hero = () => {
                   <p className="text-preset-6-semi-bold text-white">Your BMI is...</p>
                   <p className="text-preset-2-semi-bold lg:text-preset-1-semi-bold text-white">{bmi}</p>
                 </div>
-                <p className="text-preset-7-regular text-white flex-1">Your BMI suggests you’re a healthy weight. Your ideal weight is between 9st 6lbs - 12st 10lbs.</p>
+               {setFeedback(bmi, system, weightRangeMetric, weightRangeImperial)}
               </div>
             }
           </Calculator.Output>

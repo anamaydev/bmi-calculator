@@ -1,4 +1,4 @@
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {CalculatorDataContext} from "./Hero";
 
 const Calculator = ({children}) => {
@@ -34,13 +34,6 @@ Calculator.RadioInput = function CalculatorRadioInput({label}){
 Calculator.NumericInput = function CalculatorNumericInput({id}){
   const {height, setHeight, weight, setWeight} = useContext(CalculatorDataContext);
   const [category, unit]= id.split('-');
-
-  // useEffect(() => {
-  //   console.log('-------------------');
-  //   console.log('height=', height);
-  //   console.log('weight=', weight);
-  //   console.log('-------------------');
-  // },[height, weight]);
 
   function changeHeight(e){
     setHeight(prevHeight => (
