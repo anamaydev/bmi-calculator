@@ -4,7 +4,7 @@ import {createContext, useEffect, useState} from "react";
 export const CalculatorDataContext = createContext();
 
 const Hero = () => {
-  const [system, setSystem] = useState(null);
+  const [system, setSystem] = useState('metric');
   const [height, setHeight] = useState({});
   const [weight, setWeight] = useState({});
   const [bmi, setBmi] = useState(null);

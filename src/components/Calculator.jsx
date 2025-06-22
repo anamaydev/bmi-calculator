@@ -51,6 +51,7 @@ Calculator.RadioInput = function CalculatorRadioInput({label}){
         id={label}
         name="system"
         value={label}
+        checked={isSelected}
         className="absolute z-10 size-4 cursor-pointer checked:hidden"
         onChange={e=>setSystem(e.target.value)}
       />
