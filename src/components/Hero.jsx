@@ -92,7 +92,7 @@ const Hero = () => {
       </div>
 
       {/* calculator */}
-      <CalculatorDataContext.Provider value={{setSystem, height, setHeight, weight, setWeight}}>
+      <CalculatorDataContext.Provider value={{system, setSystem, height, setHeight, weight, setWeight}}>
         <Calculator>
           <h2 className="text-preset-4-semi-bold text-blue-900">Enter your details below</h2>
           <div className="flex gap-3">

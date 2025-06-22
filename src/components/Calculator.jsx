@@ -1,4 +1,5 @@
 import {useContext} from "react";
+import { motion, AnimatePresence } from "motion/react"
 import {CalculatorDataContext} from "./Hero";
 
 const Calculator = ({children}) => {
@@ -12,12 +13,39 @@ const Calculator = ({children}) => {
 export default Calculator
 
 Calculator.RadioInput = function CalculatorRadioInput({label}){
-  const {setSystem} = useContext(CalculatorDataContext);
+  const {system, setSystem} = useContext(CalculatorDataContext);
+  const isSelected = system === label;
   return (
     <div className="relative flex gap-2 flex-1 items-center">
-      <div className="size-4 flex justify-center items-center rounded-full bg-blue-100">
-        <div className="size-2 rounded-full bg-blue-500"></div>
-      </div>
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: isSelected ? 1 : 0,
+          scale: isSelected ? 1 : 0.5,
+        }}
+        transition={{ duration: 0.6}}
+        className="size-4 flex justify-center items-center rounded-full bg-blue-100"
+      >
+        <AnimatePresence>
+          {
+            (system && system === label) &&
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.3,
+              }}
+              className="size-2 rounded-full bg-blue-500"
+            ></motion.div>
+          }
+        </AnimatePresence>
+      </motion.div>
       <input
         type="radio"
         id={label}
@@ -50,15 +78,20 @@ Calculator.NumericInput = function CalculatorNumericInput({id}){
   return(
     <div className="w-full">
       <label htmlFor={id} hidden></label>
-      <input
-        type="number"
-        id={id}
-        name={id}
-        value={category === 'height' ? height[unit] : category === 'weight' ? weight[unit] : ''}
-        onChange={category === 'height' ? changeHeight : changeWeight}
-        min={0}
-        className="border border-grey-500 p-3 rounded-xl text-preset-4-semi-bold flex-1 min-w-0 shrink-1 w-full"
-      />
+      <AnimatePresence>
+        <motion.input
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{duration: 0.9}}
+          type="number"
+          id={id}
+          name={id}
+          value={category === 'height' ? height[unit] : category === 'weight' ? weight[unit] : ''}
+          onChange={category === 'height' ? changeHeight : changeWeight}
+          min={0}
+          className="border border-grey-500 p-3 rounded-xl text-preset-4-semi-bold flex-1 min-w-0 shrink-1 w-full"
+        />
+      </AnimatePresence>
     </div>
   )
 }
