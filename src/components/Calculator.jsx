@@ -78,7 +78,7 @@ Calculator.NumericInput = function CalculatorNumericInput({id}){
   return(
     <div className="w-full">
       <label htmlFor={id} hidden></label>
-      <AnimatePresence>
+      <div className="relative">
         <motion.input
           initial={{opacity:0}}
           animate={{opacity:1}}
@@ -91,7 +91,8 @@ Calculator.NumericInput = function CalculatorNumericInput({id}){
           min={0}
           className="border border-grey-500 p-3 rounded-xl text-preset-4-semi-bold flex-1 min-w-0 shrink-1 w-full"
         />
-      </AnimatePresence>
+        <span className="absolute text-preset-4-semi-bold text-blue-500 top-1/2 right-3 transform -translate-y-1/2">{unit}</span>
+      </div>
     </div>
   )
 }
