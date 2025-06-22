@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Results from "./components/Results";
 import Tips from "./components/Tips";
+import Limitations from "./components/Limitations.jsx";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       </div>
       <Results/>
       <Tips/>
+      <Limitations/>
     </>
   )
 }

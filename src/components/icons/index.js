@@ -4,3 +4,8 @@ export {default as CurvedPatternLeft} from './CurvedPatternLeft';
 export {default as EatingIcon} from './EatingIcon';
 export {default as ExerciseIcon} from './ExerciseIcon';
 export {default as SleepIcon} from './SleepIcon';
+export {default as AgeIcon} from './AgeIcon';
+export {default as GenderIcon} from './GenderIcon';
+export {default as MuscleIcon} from './MuscleIcon';
+export {default as PregnancyIcon} from './PregnancyIcon';
+export {default as RaceIcon} from './RaceIcon';
